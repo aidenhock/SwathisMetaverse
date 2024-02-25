@@ -1,4 +1,4 @@
-function Ball(x, y, radius, e, mass, color, image){
+function Ball(x, y, radius, e, mass, color, image, useImage){
     this.position = {x: x, y: y}; // m
     this.velocity = {x: 0, y: 0}; // m/s
     this.e = -e; // Coefficient of restitution, has no units
@@ -8,6 +8,7 @@ function Ball(x, y, radius, e, mass, color, image){
     this.area = (Math.PI * radius * radius) / 10000; // m^2
     this.noteIndex = 0;
     this.image = image; // store the image
+    this.useImage = useImage;
 }
 
 var canvas = null;
@@ -126,10 +127,11 @@ var mouseDown = function(e){
         var b = 75 + Math.floor(Math.random() * (max - min) - min);
         var ballSize = parseFloat(document.getElementById('ballSizeSlider').value);
 
-        // Pass the image to the Ball constructor if useImagesForBalls is true
-        balls.push(new Ball(mouse.x, mouse.y, ballSize, 0.7, 10, "rgb(" + r + "," + g + "," + b + ")", imageToUse));
+        // Pass the image and the useImagesForBalls flag to the Ball constructor
+        balls.push(new Ball(mouse.x, mouse.y, ballSize, 0.7, 10, "rgb(" + r + "," + g + "," + b + ")", imageToUse, useImagesForBalls));
     }
 }
+
 
 var mouseUp = function(e){
     if(e.which == 1){
@@ -154,37 +156,38 @@ function loop() {
     ctx.stroke();
     ctx.closePath();
 
+    // Loop over the balls and draw each one
     for (var i = 0; i < balls.length; i++) {
         var ball = balls[i];
-
-        // Check if the ball has an image and the checkbox for using images is checked
-        if (ball.image && useImagesForBalls) {
+        
+        // Decide whether to draw the ball with an image or a color
+        if (ball.image && ball.useImage) { // Check ball-specific flag
             ctx.drawImage(ball.image, ball.position.x - ball.radius, ball.position.y - ball.radius, ball.radius*2, ball.radius*2);
         } else {
-            // draw the ball with its color
             ctx.beginPath();
             ctx.fillStyle = ball.color;
             ctx.arc(ball.position.x, ball.position.y, ball.radius, 0, 2 * Math.PI, true);
             ctx.fill();
             ctx.closePath();
         }
-        // Handling the ball collisions with other balls
+        
+        // Ball collision with other balls
         if (document.getElementById('collideCheckbox').checked) {
             for (var j = i + 1; j < balls.length; j++) {
-                collisionBalls(balls[i], balls[j]);
+                collisionBalls(ball, balls[j]);
             }
         }
 
-        // Handling the ball collisions with the circle boundary
-        collisionCircle(balls[i]);
+        // Ball collision with the circle boundary
+        collisionCircle(ball);
 
-        // Update position and velocity
-        balls[i].velocity.x += 0; // No need to update x velocity
-        balls[i].velocity.y += ag * fps * 100; // Update y velocity with gravity
-        balls[i].position.x += balls[i].velocity.x * fps * 100;
-        balls[i].position.y += balls[i].velocity.y * fps * 100;  
+        // Update ball's position and velocity
+        ball.velocity.y += ag * fps * 100; // Gravity effect
+        ball.position.x += ball.velocity.x * fps * 100; // Horizontal movement
+        ball.position.y += ball.velocity.y * fps * 100; // Vertical movement
     }
 }
+
 
 
 
