@@ -1,10 +1,10 @@
-function Ball(x, y, radius, e, mass, colour, image){
+function Ball(x, y, radius, e, mass, color, image){
     this.position = {x: x, y: y}; // m
     this.velocity = {x: 0, y: 0}; // m/s
     this.e = -e; // Coefficient of restitution, has no units
     this.mass = mass; // kg
     this.radius = radius; // m
-    this.colour = colour;
+    this.color = color;
     this.area = (Math.PI * radius * radius) / 10000; // m^2
     this.noteIndex = 0;
     this.image = image; // store the image
@@ -23,11 +23,15 @@ var height = 0;
 var balls = [];
 var circleCenter = {};
 var circleRadius = 0;
+
+// using web audio api
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-const musicalScale = [196, 220, 246.94, 261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25, 587.33, 659.25, 698.46, 783.99, 880.00, 987.77, 1046.5];
+// extra notes i choose to omit
+// 196, 220, 246.94, 261.63, 293.66, 329.63, 349.23, 
+const musicalScale = [392.00, 440.00, 493.88, 523.25, 587.33, 659.25, 698.46, 783.99, 880.00, 987.77, 1046.5];
+
 // Global variable to keep track of whether to use images for balls or not
 var useImagesForBalls = false;
-
 // preload all images and store them in an array for easy access
 var images = [];
 function preloadImages() {
@@ -67,7 +71,6 @@ function drawCircle() {
     ctx.arc(circleCenter.x, circleCenter.y, circleRadius, 0, 2 * Math.PI);
     ctx.stroke();
     ctx.closePath();
-    // If you have other elements that need to be redrawn, call their respective draw functions here.
 }
 
 
@@ -78,14 +81,14 @@ var setup = function(){
     height = canvas.height;
     circleCenter = {x: width / 2, y: height / 2};
     circleRadius = Math.min(width, height) / 2 - 10; // Subtract 10 to account for the ball radius
-	document.getElementById('sizeSlider').addEventListener('input', function(e) {
+	document.getElementById('boundarySlider').addEventListener('input', function(e) {
 		circleRadius = e.target.value;
 		drawCircle(); // You may need to create this function or integrate its functionality into your code
 	});
 
     ag = 0;
 
-    document.getElementById('gravity').addEventListener('input', function(e) {
+    document.getElementById('gravitySlider').addEventListener('input', function(e) {
         ag = parseFloat(e.target.value) / 10;
     });
 
@@ -158,15 +161,15 @@ function loop() {
         if (ball.image && useImagesForBalls) {
             ctx.drawImage(ball.image, ball.position.x - ball.radius, ball.position.y - ball.radius, ball.radius*2, ball.radius*2);
         } else {
-            // Existing code to draw the ball with its color
+            // draw the ball with its color
             ctx.beginPath();
-            ctx.fillStyle = ball.colour;
+            ctx.fillStyle = ball.color;
             ctx.arc(ball.position.x, ball.position.y, ball.radius, 0, 2 * Math.PI, true);
             ctx.fill();
             ctx.closePath();
         }
         // Handling the ball collisions with other balls
-        if (document.getElementById('collide').checked) {
+        if (document.getElementById('collideCheckbox').checked) {
             for (var j = i + 1; j < balls.length; j++) {
                 collisionBalls(balls[i], balls[j]);
             }
@@ -175,20 +178,11 @@ function loop() {
         // Handling the ball collisions with the circle boundary
         collisionCircle(balls[i]);
 
-        // Rendering the ball
-        // ctx.beginPath();
-        // ctx.fillStyle = balls[i].colour;
-        // ctx.arc(balls[i].position.x, balls[i].position.y, balls[i].radius, 0, 2 * Math.PI, true);
-        // ctx.fill();
-        // ctx.closePath();
-
         // Update position and velocity
         balls[i].velocity.x += 0; // No need to update x velocity
         balls[i].velocity.y += ag * fps * 100; // Update y velocity with gravity
         balls[i].position.x += balls[i].velocity.x * fps * 100;
-        balls[i].position.y += balls[i].velocity.y * fps * 100;
-
-        
+        balls[i].position.y += balls[i].velocity.y * fps * 100;  
     }
 }
 
@@ -250,7 +244,7 @@ function collisionCircle(ball){
         var r = 75 + Math.floor(Math.random() * (max - min) - min);
         var g = 0 + Math.floor(Math.random() * (0 - 0) - 0);
         var b = 75 + Math.floor(Math.random() * (max - min) - min);
-        ball.colour = "rgb(" + r + "," + g + "," + b + ")";
+        ball.color = "rgb(" + r + "," + g + "," + b + ")";
         
         // Check if the play note checkbox is checked and play the note
         if (document.getElementById('playNoteCheckbox').checked) {

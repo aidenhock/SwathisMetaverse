@@ -10,22 +10,22 @@
     </script>
 </head>
 <body align="center" class="container-fluid">
-    <h1>Boncing Ball</h1>
+    <h1>Swathi's MetaVerse</h1>
     <table align = "center">
         <tr>
             <th>
                 <div>
                     <h4>Boundary Size</h4>
                     <div>
-                        <input type="range" id="sizeSlider" min="10" max="300" value="150">
+                        <input type="range" id="boundarySlider" min="10" max="300" value="150">
                     </div>
                 </div>
             </th>
             <th>
                 <div>
-                    <h4>Gravity</h4>
+                    <h4>Gravity Power</h4>
                     <div>
-                        <input type="range" id="gravity" min="0" max ="10" value="0">
+                        <input type="range" id="gravitySlider" min="0" max ="10" value="0">
                     </div>
                 </div>
             </th>
@@ -40,32 +40,30 @@
     </table>
     <table align="center">
         <tr>
-            <div>
-                <h4>On Bounce</h4>
-            </div>
             <th>
                 <div>
-                    <h4>Dev Balls</h4>
+                    <!--<h4>Dev Balls</h4>-->
                     <input type="checkbox" id="useImageCheckbox"> Use Developer Balls
                 </div>
             </th>
             <th>
                 <div>
-                    <h4>Shape collide</h4>
-                    <input type="checkbox" id="collide" checked/>	
+                    <!--<h4>Balls Collide</h4>-->
+                    <input type="checkbox" id="collideCheckbox"> Enable Collision
                 </div>
             </th>
             <th>
                 <div>
-                    <h4>Shape Play Note</h4>
+                    <!--<h4>Musical Balls</h4>-->
                     <input type="checkbox" id="playNoteCheckbox"> Play Note on Bounce
                 </div>
             </th>
         </tr>
     </table>
     <canvas id="canvas" width="800" height="550" style="background-color:black"></canvas>
-    <div id="controls">
-        <!-- Other controls... -->
-        <button id="resetButton">Reset Game</button>
-    </div>    
+    <th>
+        <div id="controls">
+            <button id="resetButton">Reset</button>
+        </div>    
+    </th>
 </body>
