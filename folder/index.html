@@ -11,12 +11,33 @@
 </head>
 <body align="center" class="container-fluid">
     <h1>Boncing Ball</h1>
-    <div>
-        <h4>Boundary Size</h4>
-        <div>
-            <input type="range" id="sizeSlider" min="10" max="300" value="150">
-        </div>
-    </div>
+    <table align = "center">
+        <tr>
+            <th>
+                <div>
+                    <h4>Boundary Size</h4>
+                    <div>
+                        <input type="range" id="sizeSlider" min="10" max="300" value="150">
+                    </div>
+                </div>
+            </th>
+            <th>
+                <div>
+                    <h4>Gravity</h4>
+                    <div>
+                        <input type="range" id="gravity" min="0" max ="10" value="0">
+                    </div>
+                </div>
+            </th>
+            <th>
+                <div>
+                    <h4>Ball Size</h4>
+                    <input type="range" id="ballSizeSlider" min="5" max="30" value="10">
+                </div>
+            </th>
+        </tr>
+
+    </table>
     <table align="center">
         <tr>
             <div>
@@ -24,20 +45,20 @@
             </div>
             <th>
                 <div>
-                    <h4>Shape Duplicate</h4>
-                    <input type="checkbox" checked/>
+                    <h4>Dev Balls</h4>
+                    <input type="checkbox" id="useImageCheckbox"> Use Developer Balls
                 </div>
             </th>
             <th>
                 <div>
-                    <h4>Shape Change Color</h4>
-                    <input type="checkbox" checked/>	
+                    <h4>Shape collide</h4>
+                    <input type="checkbox" id="collide" checked/>	
                 </div>
             </th>
             <th>
                 <div>
                     <h4>Shape Play Note</h4>
-                    <input type="checkbox" checked/>
+                    <input type="checkbox" id="playNoteCheckbox"> Play Note on Bounce
                 </div>
             </th>
         </tr>
