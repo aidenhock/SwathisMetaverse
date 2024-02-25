@@ -42,6 +42,16 @@ function preloadImages() {
 }
 preloadImages();
 
+function resetGame() {
+    // Clear all balls from the array
+    balls = [];
+
+    useImagesForBalls = false; 
+
+    // Redraw the game area
+    drawCircle();
+}
+
 function playNote(noteIndex) {
     const oscillator = audioCtx.createOscillator();
     oscillator.frequency.setValueAtTime(musicalScale[noteIndex], audioCtx.currentTime);
@@ -87,6 +97,8 @@ var setup = function(){
             balls[i].area = (Math.PI * newSize * newSize) / 10000; // Update the area accordingly
         }
     });
+
+    document.getElementById('resetButton').addEventListener('click', resetGame);
 
     canvas.onmousedown = mouseDown;
     canvas.onmouseup = mouseUp;
