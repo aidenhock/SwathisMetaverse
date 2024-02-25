@@ -1,0 +1,46 @@
+<head>
+    <title>Bouncing Ball</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="bounce.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            setup();
+        });
+    </script>
+</head>
+<body align="center" class="container-fluid">
+    <h1>Boncing Ball</h1>
+    <div>
+        <h4>Boundary Size</h4>
+        <div>
+            <input type="range" id="sizeSlider" min="10" max="300" value="150">
+        </div>
+    </div>
+    <table align="center">
+        <tr>
+            <div>
+                <h4>On Bounce</h4>
+            </div>
+            <th>
+                <div>
+                    <h4>Shape Duplicate</h4>
+                    <input type="checkbox" checked/>
+                </div>
+            </th>
+            <th>
+                <div>
+                    <h4>Shape Change Color</h4>
+                    <input type="checkbox" checked/>	
+                </div>
+            </th>
+            <th>
+                <div>
+                    <h4>Shape Play Note</h4>
+                    <input type="checkbox" checked/>
+                </div>
+            </th>
+        </tr>
+    </table>
+    <canvas id="canvas" width="800" height="550" style="background-color:black"></canvas>
+</body>
